@@ -1,6 +1,6 @@
 import java.util .*;
 
- public class Catalogue <T extends Document > {
+ public class Catalogue <T extends Document> implements Iterable<T>  {
  private final List <T> elements = new ArrayList < >();
 
  public void ajouter (T element ) { elements .add( element ); }
@@ -8,11 +8,9 @@ import java.util .*;
 public Optional <T> rechercherParTitre ( String titre ) {
 return elements.stream().filter (d -> d. getTitre().equalsIgnoreCase( titre )).findFirst ();
  }
-
- public void afficherTout () {
- elements.forEach (d -> System.out.println (d.descriptionCourte ()));
- }
-
+public Iterator<T> iterator(){
+ return Collections.unmodifiableList(elements).iterator();
+}
 public static <T extends Comparable <T>> T max(List <T> liste ) { // bonus
  T m = liste.get (0);
  for (T e : liste ) if (e.compareTo (m) > 0) m = e;
